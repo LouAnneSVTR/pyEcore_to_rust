@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="charactersimulation" nsURI="charactersimulation" nsPrefix="charactersimulation">
+	<eClassifiers xsi:type="ecore:EClass" name="Action" abstract="true">
+		<eStructuralFeatures xsi:type="ecore:EReference" name="nextAction" eType="#//Action" />
+		<eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" />
+	</eClassifiers>
+	<eClassifiers xsi:type="ecore:EClass" name="CharacterBehavior">
+		<eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1" eType="#//Action" containment="true" />
+		<eStructuralFeatures xsi:type="ecore:EReference" name="firstAction" eType="#//Action" />
+		<eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" />
+	</eClassifiers>
+	<eClassifiers xsi:type="ecore:EClass" name="MoveForward" eSuperTypes="#//Action">
+		<eStructuralFeatures xsi:type="ecore:EAttribute" name="distance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" />
+	</eClassifiers>
+	<eClassifiers xsi:type="ecore:EClass" name="RotateRight" eSuperTypes="#//Action" />
+	<eClassifiers xsi:type="ecore:EClass" name="RotateLeft" eSuperTypes="#//Action" />
+	<eClassifiers xsi:type="ecore:EClass" name="Say" eSuperTypes="#//Action">
+		<eStructuralFeatures xsi:type="ecore:EAttribute" name="message" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" />
+	</eClassifiers>
+	<eClassifiers xsi:type="ecore:EClass" name="CharacterSimulation">
+		<eStructuralFeatures xsi:type="ecore:EReference" name="availableBehaviors" upperBound="-1" eType="#//CharacterBehavior" containment="true" />
+		<eStructuralFeatures xsi:type="ecore:EReference" name="runtimeState" eType="#//runtimestate/SimulationState" containment="true" />
+		<eStructuralFeatures xsi:type="ecore:EReference" name="characters" upperBound="-1" eType="#//Character" containment="true" eOpposite="#//Character/simulation" />
+	</eClassifiers>
+	<eClassifiers xsi:type="ecore:EClass" name="Character">
+		<eStructuralFeatures xsi:type="ecore:EReference" name="characterbehavior" lowerBound="1" eType="#//CharacterBehavior" />
+		<eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" />
+		<eStructuralFeatures xsi:type="ecore:EAttribute" name="startingY" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" />
+		<eStructuralFeatures xsi:type="ecore:EAttribute" name="startingX" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" />
+		<eStructuralFeatures xsi:type="ecore:EReference" name="simulation" lowerBound="1" eType="#//CharacterSimulation" eOpposite="#//CharacterSimulation/characters" />
+		<eStructuralFeatures xsi:type="ecore:EAttribute" name="startingDirection" eType="#//Direction" />
+	</eClassifiers>
+	<eClassifiers xsi:type="ecore:EEnum" name="Direction">
+		<eLiterals name="UP" />
+		<eLiterals name="DOWN" />
+		<eLiterals name="LEFT" />
+		<eLiterals name="RIGHT" />
+	</eClassifiers>
+	<eSubpackages name="runtimestate" nsURI="runtimestate" nsPrefix="runtimestate">
+		<eClassifiers xsi:type="ecore:EClass" name="CharacterState">
+			<eStructuralFeatures xsi:type="ecore:EAttribute" name="currentX" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" />
+			<eStructuralFeatures xsi:type="ecore:EAttribute" name="currentY" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" />
+			<eStructuralFeatures xsi:type="ecore:EReference" name="character" lowerBound="1" eType="#//Character" />
+			<eStructuralFeatures xsi:type="ecore:EReference" name="currentAction" eType="#//Action" />
+			<eStructuralFeatures xsi:type="ecore:EAttribute" name="currentDirection" eType="#//Direction" />
+		</eClassifiers>
+		<eClassifiers xsi:type="ecore:EClass" name="SimulationState">
+			<eStructuralFeatures xsi:type="ecore:EReference" name="characterStates" upperBound="-1" eType="#//runtimestate/CharacterState" containment="true" />
+		</eClassifiers>
+	</eSubpackages>
+</ecore:EPackage>
